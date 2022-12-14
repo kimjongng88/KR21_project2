@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+
+<!--Author: Chi Him Ng
+    Bayesian network in XMLBIF v0.3 (BayesNet Interchange Format)
+ -->
+
+<!-- DTD for the XMLBIF 0.3 format -->
+<!DOCTYPE BIF [
+	<!ELEMENT BIF ( NETWORK )*>
+	      <!ATTLIST BIF VERSION CDATA #REQUIRED>
+	<!ELEMENT NETWORK ( NAME, ( PROPERTY | VARIABLE | DEFINITION )* )>
+	<!ELEMENT NAME (#PCDATA)>
+	<!ELEMENT VARIABLE ( NAME, ( OUTCOME |  PROPERTY )* ) >
+	      <!ATTLIST VARIABLE TYPE (nature|decision|utility) "nature">
+	<!ELEMENT OUTCOME (#PCDATA)>
+	<!ELEMENT DEFINITION ( FOR | GIVEN | TABLE | PROPERTY )* >
+	<!ELEMENT FOR (#PCDATA)>
+	<!ELEMENT GIVEN (#PCDATA)>
+	<!ELEMENT TABLE (#PCDATA)>
+	<!ELEMENT PROPERTY (#PCDATA)>
+]>
+
+<BIF VERSION="0.3">
+<NETWORK>
+    <NAME>Lecture Example</NAME>
+
+    <!-- Variables-->
+    <VARIABLE TYPE="nature">
+        <NAME>70+</NAME>
+        <OUTCOME>True</OUTCOME>
+        <OUTCOME>False</OUTCOME>
+    </VARIABLE>
+    <VARIABLE TYPE="nature">
+        <NAME>Diabetes</NAME>
+        <OUTCOME>True</OUTCOME>
+        <OUTCOME>False</OUTCOME>
+    </VARIABLE>
+    <VARIABLE TYPE="nature">
+        <NAME>Smoker</NAME>
+        <OUTCOME>True</OUTCOME>
+        <OUTCOME>False</OUTCOME>
+    </VARIABLE>
+    <VARIABLE TYPE="nature">
+        <NAME>High blood pressure</NAME>
+        <OUTCOME>True</OUTCOME>
+        <OUTCOME>False</OUTCOME>
+    </VARIABLE>
+    <VARIABLE TYPE="nature">
+        <NAME>Stroke history</NAME>
+        <OUTCOME>True</OUTCOME>
+        <OUTCOME>False</OUTCOME>
+    </VARIABLE>
+    <VARIABLE TYPE="nature">
+        <NAME>Corony artery disease</NAME>
+        <OUTCOME>True</OUTCOME>
+        <OUTCOME>False</OUTCOME>
+    </VARIABLE>
+    <VARIABLE TYPE="nature">
+        <NAME>Hyperlipidemie</NAME>
+        <OUTCOME>True</OUTCOME>
+        <OUTCOME>False</OUTCOME>
+    </VARIABLE>
+    <VARIABLE TYPE="nature">
+        <NAME>Anticoagulant</NAME>
+        <OUTCOME>True</OUTCOME>
+        <OUTCOME>False</OUTCOME>
+    </VARIABLE>
+    <VARIABLE TYPE="nature">
+        <NAME>Blood thick</NAME>
+        <OUTCOME>True</OUTCOME>
+        <OUTCOME>False</OUTCOME>
+    </VARIABLE>
+    <VARIABLE TYPE="nature">
+        <NAME>Liver/Kidney disease</NAME>
+        <OUTCOME>True</OUTCOME>
+        <OUTCOME>False</OUTCOME>
+    </VARIABLE>
+    <VARIABLE TYPE="nature">
+        <NAME>Internal Bleeding</NAME>
+        <OUTCOME>True</OUTCOME>
+        <OUTCOME>False</OUTCOME>
+    </VARIABLE>
+    <VARIABLE TYPE="nature">
+        <NAME>Stroke</NAME>
+        <OUTCOME>True</OUTCOME>
+        <OUTCOME>False</OUTCOME>
+    </VARIABLE>
+
+    <!-- PCTs -->
+    <DEFINITION>
+        <FOR>70+</FOR>
+        <TABLE>0.713 0.287</TABLE>
+    </DEFINITION>
+    <DEFINITION>
+        <FOR>Smoker</FOR>
+        <TABLE>0.631 0.369</TABLE>
+    </DEFINITION>
+    <DEFINITION>
+        <FOR>Diabetes</FOR>
+        <TABLE>0.7 0.3</TABLE>
+    </DEFINITION>
+    <DEFINITION>
+        <FOR>High blood pressure</FOR>
+        <GIVEN>Diabetes</GIVEN>
+        <GIVEN>70+</GIVEN>
+        <GIVEN>Smoker</GIVEN>
+        <TABLE>0.95 0.05 0.3 0.7 0.24 0.76 0.25 0.75 0.45 0.55 0.4 0.6 0.3 0.7 0.05 0.95</TABLE>
+    </DEFINITION>
+    <DEFINITION>
+        <FOR>Stroke history</FOR>
+        <GIVEN>Diabetes</GIVEN>
+        <GIVEN>70+</GIVEN>
+        <TABLE>0.99 0.01 0.95 0.05 0.9 0.1 0.83 0.17</TABLE>
+    </DEFINITION>
+    <DEFINITION>
+        <FOR>Hyperlipidemie</FOR>
+        <GIVEN>Diabetes</GIVEN>
+        <GIVEN>Smoker</GIVEN>
+        <TABLE>0.95 0.05 0.75 0.25 0.67 0.33 0.4 0.6</TABLE>
+    </DEFINITION>
+    <DEFINITION>
+        <FOR>Blood thick</FOR>
+        <GIVEN>High blood pressure</GIVEN>
+        <GIVEN>Stroke history</GIVEN>
+        <TABLE>0.9 0.1 0.67 0.33 0.6 0.4 0.2 0.8</TABLE>
+    </DEFINITION>
+    <DEFINITION>
+        <FOR>Anticoagulant</FOR>
+        <GIVEN>Blood thick</GIVEN>
+        <GIVEN>Stroke history</GIVEN>
+        <TABLE>0.99 0.01 0.92 0.08 0.24 0.76 0.1 0.9</TABLE>
+    </DEFINITION>
+    <DEFINITION>
+        <FOR>Liver/Kidney disease</FOR>
+        <GIVEN>Hyperlipidemie</GIVEN>
+        <GIVEN>Smoker</GIVEN>
+        <TABLE>0.98 0.02 0.94 0.06 0.95 0.05 0.92 0.08</TABLE>
+    </DEFINITION>
+    <DEFINITION>
+        <FOR>Corony artery disease</FOR>
+        <GIVEN>High blood pressure</GIVEN>
+        <GIVEN>Hyperlipidemie</GIVEN>
+        <GIVEN>Smoker</GIVEN>
+        <TABLE>0.95 0.05 0.82 0.18 0.8 0.2 0.4 0.6 0.78 0.22 0.45 0.55 0.4 0.6 0.2 0.8</TABLE>
+    </DEFINITION>
+    <DEFINITION>
+        <FOR>Internal Bleeding</FOR>
+        <GIVEN>Anticoagulant</GIVEN>
+        <GIVEN>Liver/Kidney disease</GIVEN>
+        <TABLE>0.99 0.01 0.92 0.08 0.98 0.02 0.99 0.01</TABLE>
+    </DEFINITION>
+    <DEFINITION>
+        <FOR>Stroke</FOR>
+        <GIVEN>Corony artery disease</GIVEN>
+        <GIVEN>Blood thick</GIVEN>
+        <TABLE>0.95 0.05 0.93 0.07 0.92 0.08 0.9 0.1</TABLE>
+    </DEFINITION>
+</NETWORK>
+</BIF>
