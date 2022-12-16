@@ -373,7 +373,6 @@ class BNReasoner:
         Returns:
             pd.Dataframe: Dataframe after elimination
         """
-        print(data, "initial dataframe")
         remaining = data.drop(columns=var) # Drop column thats need to be summed out
         rem_list = list(remaining.columns.values)[:-1] # Get remaining dataframe
         if len(rem_list) == 0: # If empty return empty frame
